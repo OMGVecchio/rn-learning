@@ -12,6 +12,8 @@
 
 ## 简单了解下各个组件及接口
 
-+ 掌握各个组件及 API 的大致使用
+掌握各个组件及 API 的大致使用，了解与 Webapp 在开发方式包括语法上的些许差别
 
-+ 了解与 Webapp 在开发方式包括语法上的些许差别
++ 项目元信息：IOS => Info.plist；Android => AndroidManifest.xml ？
+
++ 因为 Java 等强类型语言的问题，所以在一些 API 接口中的字段类型必须跟声明一致？eg. AsyncStorage.setItem(key: String, value: String, ...)

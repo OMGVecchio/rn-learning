@@ -36,6 +36,9 @@ export default class IndexPage extends PureComponent {
     }, {
       key: 'native',
       page: 'NativePage'
+    }, {
+      key: 'api',
+      page: 'ApiPage'
     }]
   }
   render() {
