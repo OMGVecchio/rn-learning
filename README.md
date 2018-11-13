@@ -132,3 +132,5 @@ Could not resolve all files for configuration ':app:debugRuntimeClasspath'.
 ```
 
 + [最后按照官网上的改了下，感觉可以解决，但自己乱动了很多文件，可能改了很多版本号，导致现在项目有点乱，但是没关系，测试项目，慢慢优化学习吧](https://github.com/react-native-community/react-native-camera#android)
+
++ 摄像头最终还是解决了，就按照官网配置，出现的错误一路 Google

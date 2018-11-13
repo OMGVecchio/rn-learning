@@ -39,5 +39,5 @@ ext {
     targetSdkVersion            = 26
     buildToolsVersion           = "26.0.2"
     googlePlayServicesVersion   = "12.0.1"
-    supportLibVersion           = "27.1.0"
+    supportLibVersion           = "26.1.0"
 }
