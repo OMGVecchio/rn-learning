@@ -134,3 +134,74 @@ Could not resolve all files for configuration ':app:debugRuntimeClasspath'.
 + [最后按照官网上的改了下，感觉可以解决，但自己乱动了很多文件，可能改了很多版本号，导致现在项目有点乱，但是没关系，测试项目，慢慢优化学习吧](https://github.com/react-native-community/react-native-camera#android)
 
 + 摄像头最终还是解决了，就按照官网配置，出现的错误一路 Google
+
+## 特定平台代码
+
++ 通过 `Platform` 模块，调用 `Platform.OS` 或 `Platform.select` 区分
+
++ 通过文件名区分，`Button.android.js` 或 `Button.ios.js` 直接通过 `require('./Button')` 针对不同平台加载不同文件
+
+## 打包发布
+
+### IOS
+
++ 建好 `ios/bundle` 文件夹， `react-native bundle --entry-file index.js --platform ios --dev false --bundle-output ./ios/bundle/index.ios.jsbundle --assets-dest ./ios/bundle` 往里面打包好资源
+
++ 选择 `Create folder references` 将此资源添加到 `Xcode` 项目工程中
+
++ 修改 `AppDelegate.m` 文件，使 debug 和 release 状态加载不同资源包，代码如下
+
+```m
+NSURL *jsCodeLocation;
+#ifdef DEBUG
+     //开发包
+     jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index.ios" fallbackResource:nil];
+#else
+     //离线包
+    jsCodeLocation = [[NSBundle mainBundle] URLForResource:@"bundle/index.ios" withExtension:@"jsbundle"];
+#endif
+```
+
++ 在 `Xcode` 中添加证书、配置描述文件打包
+
+### Android
+
++ `keytool -genkey -v -keystore my-release-key.keystore -alias my-key-alias -keyalg RSA -keysize 2048 -validity 10000` 输入秘钥库和密码，生成秘钥库文件 my-release-key.keystore，然后放到工程的 `android/app` 文件下
+
++ `~/.gradle/gradle.properties` 全局 gradle 配置或者项目 `android/gradle.properties` 配置，添加如下配置：
+
+```properties
+MYAPP_RELEASE_STORE_FILE=my-release-key.keystore
+MYAPP_RELEASE_KEY_ALIAS=my-key-alias
+MYAPP_RELEASE_STORE_PASSWORD=**密码**
+MYAPP_RELEASE_KEY_PASSWORD=**密码**
+```
+
++ `android/app/build.gradle` 中添加如下配置
+
+```gradle
+...
+android {
+    ...
+    defaultConfig { ... }
+    signingConfigs {
+        release {
+            if (project.hasProperty('MYAPP_RELEASE_STORE_FILE')) {
+                storeFile file(MYAPP_RELEASE_STORE_FILE)
+                storePassword MYAPP_RELEASE_STORE_PASSWORD
+                keyAlias MYAPP_RELEASE_KEY_ALIAS
+                keyPassword MYAPP_RELEASE_KEY_PASSWORD
+            }
+        }
+    }
+    buildTypes {
+        release {
+            ...
+            signingConfig signingConfigs.release
+        }
+    }
+}
+...
+```
+
++ 最后在 `android` 目录下执行 `./gradlew assembleRelease`
