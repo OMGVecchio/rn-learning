@@ -39,6 +39,9 @@ export default class IndexPage extends PureComponent {
     }, {
       key: 'api',
       page: 'ApiPage'
+    }, {
+      key: '摄像头',
+      page: 'CameraPage'
     }]
   }
   render() {
