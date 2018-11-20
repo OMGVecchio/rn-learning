@@ -52,5 +52,11 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>allow camera</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>allow photo</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>allow microphone</string>
 </dict>
 </plist>

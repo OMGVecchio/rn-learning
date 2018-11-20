@@ -8,6 +8,7 @@ import TouchPage from './container/touch'
 import FetchPage from './container/fetch'
 import NativePage from './container/native'
 import ApiPage from './container/api'
+import CameraPage from './container/camera'
 
 const App = createStackNavigator({
   IndexPage: {
@@ -30,6 +31,9 @@ const App = createStackNavigator({
   },
   ApiPage: {
     screen: ApiPage
+  },
+  CameraPage: {
+    screen: CameraPage
   }
 }, {
   navigationOptions: {
